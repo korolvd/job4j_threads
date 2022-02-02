@@ -11,6 +11,8 @@ public class ThreadState {
         first.start();
         second.start();
         while (first.getState() != Thread.State.TERMINATED || second.getState() != Thread.State.TERMINATED) {
+            System.out.println(first.getState().toString());
+            System.out.println(second.getState().toString());
         }
         System.out.println("Work is complete");
     }
