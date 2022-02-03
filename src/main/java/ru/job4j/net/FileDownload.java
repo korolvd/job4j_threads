@@ -1,4 +1,4 @@
-package net;
+package ru.job4j.net;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;

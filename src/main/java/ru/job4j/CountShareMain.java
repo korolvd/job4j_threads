@@ -1,3 +1,5 @@
+package ru.job4j;
+
 public class CountShareMain {
     public static void main(String[] args) throws InterruptedException {
         Count count = new Count();

@@ -1,22 +1,22 @@
-public class Flag {
-    private static volatile boolean flag = true;
+package ru.job4j.concurrent;
 
+public class ThreadStop {
     public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(
                 () -> {
-                    while (flag) {
-                        System.out.println(Thread.currentThread().getName());
+                    while (!Thread.currentThread().isInterrupted()) {
                         try {
-                            Thread.sleep(500);
+                            System.out.println("start ...");
+                            Thread.sleep(10000);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
                         }
                     }
                 }
         );
         thread.start();
         Thread.sleep(1000);
-        flag = false;
+        thread.interrupt();
         thread.join();
     }
 }

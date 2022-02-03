@@ -1,22 +1,24 @@
-package concurrent;
+package ru.job4j;
 
-public class ThreadStop {
+public class Flag {
+    private static volatile boolean flag = true;
+
     public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(
                 () -> {
-                    while (!Thread.currentThread().isInterrupted()) {
+                    while (flag) {
+                        System.out.println(Thread.currentThread().getName());
                         try {
-                            System.out.println("start ...");
-                            Thread.sleep(10000);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
+                            e.printStackTrace();
                         }
                     }
                 }
         );
         thread.start();
         Thread.sleep(1000);
-        thread.interrupt();
+        flag = false;
         thread.join();
     }
 }
