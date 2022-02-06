@@ -25,19 +25,15 @@ public class SimpleBlockingQueue<T> {
         if (queue.size() == size) {
             this.wait();
         }
-        if (queue.size() == 0) {
-            notifyAll();
-        }
         queue.offer(value);
+        notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
         if (queue.size() == 0) {
             this.wait();
         }
-        if (queue.size() == size) {
-            notifyAll();
-        }
+        notifyAll();
         return queue.poll();
     }
 
