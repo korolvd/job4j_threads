@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class SaveToFile implements ISave{
+public class SaveToFile implements ISave {
 
     private final File file;
 

@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.function.Predicate;
 
-public class FileReader implements IReader{
+public class FileReader implements IReader {
 
     private final File file;
 
