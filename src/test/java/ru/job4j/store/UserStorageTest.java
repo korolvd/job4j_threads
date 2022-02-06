@@ -35,6 +35,7 @@ public class UserStorageTest {
         User user1 = new User(1, 100);
         User user2 = new User(2, 100);
         assertTrue(storage.add(user1));
+        assertFalse(storage.add(user1));
         assertTrue(storage.add(user2));
         Thread firstThread = new UserStorageTest.ThreadTransfer(
                 storage, user1.getId(), user2.getId(), 50);
