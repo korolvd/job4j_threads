@@ -16,17 +16,11 @@ public final class UserStorage implements Store {
 
     @Override
     public synchronized boolean add(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User is null");
-        }
         return users.putIfAbsent(user.getId(), user) == null;
     }
 
     @Override
     public synchronized boolean update(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User is null");
-        }
         return users.replace(user.getId(), user) != null;
     }
 
