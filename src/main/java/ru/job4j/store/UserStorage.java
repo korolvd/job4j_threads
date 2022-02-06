@@ -19,12 +19,7 @@ public final class UserStorage implements Store {
         if (user == null) {
             throw new IllegalArgumentException("User is null");
         }
-        boolean rsl = false;
-        if (!users.containsKey(user.getId())) {
-            users.put(user.getId(), user);
-            rsl = true;
-        }
-        return rsl;
+        return users.putIfAbsent(user.getId(), user) == null;
     }
 
     @Override
@@ -32,35 +27,23 @@ public final class UserStorage implements Store {
         if (user == null) {
             throw new IllegalArgumentException("User is null");
         }
-        boolean rsl = false;
-        if (users.containsKey(user.getId())) {
-            users.put(user.getId(), user);
-            rsl = true;
-        }
-        return rsl;
+        return users.replace(user.getId(), user) != null;
     }
 
     @Override
     public synchronized boolean delete(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User is null");
-        }
-        return users.remove(user.getId()) == user;
+        return users.remove(user.getId(), user);
     }
 
     @Override
     public synchronized void transfer(int fromId, int toId, int amount) {
-        if (fromId == toId || fromId < 0 || toId < 0 || amount <= 0) {
-            throw new IllegalArgumentException("Illegal ids or amount");
-        }
-        if (!users.containsKey(fromId) || !users.containsKey(toId)) {
-            throw new IllegalArgumentException("Sours account or destination account is not exist");
-        }
-        if (users.get(fromId).getAmount() < amount) {
-            throw new IllegalArgumentException("Not enough amount on the account to transfer");
-        }
         User sourceUser = users.get(fromId);
         User destUser = users.get(toId);
+        if (sourceUser == null || destUser == null || users.get(fromId).getAmount() < amount) {
+            throw new IllegalArgumentException(
+                    "Accounts is not exists or not enough amount on the account to transfer");
+        }
+
         sourceUser.setAmount(sourceUser.getAmount() - amount);
         destUser.setAmount(destUser.getAmount() + amount);
     }
