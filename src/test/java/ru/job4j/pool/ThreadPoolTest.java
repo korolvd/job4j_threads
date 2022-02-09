@@ -18,7 +18,7 @@ public class ThreadPoolTest {
         for (int i = 0; i < 8; i++) {
             threadPool.work(task);
         }
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         threadPool.shutdown();
         assertThat(buffer, is(List.of(1, 1, 1, 1, 1, 1, 1, 1)));
     }
