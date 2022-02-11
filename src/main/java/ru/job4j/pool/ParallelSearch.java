@@ -20,7 +20,7 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
     protected Integer compute() {
         int rsl;
         if (to - from <= 10) {
-            rsl = indexOf(array, value, from, to);
+            rsl = indexOf();
         } else {
             int mid = (from + to) / 2;
             ParallelSearch<T> leftSearch = new ParallelSearch<>(array, value, from, mid);
@@ -34,9 +34,9 @@ public class ParallelSearch<T> extends RecursiveTask<Integer> {
         return rsl;
     }
 
-    private static <T> int indexOf(T[] array, T value, int from, int to) {
+    private int indexOf() {
         int rsl = -1;
-        for (int i = from; i <= to; i++) {
+        for (int i = this.from; i <= to; i++) {
             if (value.equals(array[i])) {
                 rsl = i;
                 break;
